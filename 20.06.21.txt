@@ -1,0 +1,125 @@
+#include <iostream>
+using namespace std;
+
+//случайно число параметров
+
+void func(int num, int first, ...)
+{
+	int* ptr = &first;
+	while (num--)
+	{
+		cout << *ptr << endl;
+		ptr++;
+	}
+}
+
+int main()
+{
+	func(3, 1, 2, 3);
+	return 0;
+}
+
+============================================
+#include <iostream>
+using namespace std;
+
+//Стек - LIFO(Last in Fist Out)
+
+class Stack
+{
+	//нижняя и верхняя граница стека
+	enum{EMPTY = -1, FULL = 20};
+	
+	//Массив для хранения данных
+	int array[FULL];
+
+	//Указатель на вершину стека
+	int top;
+	
+public:
+	//Конструктор
+	Stack()
+	{
+		top = EMPTY; //top = -1;
+	}
+
+	bool IsEmpty()
+	{
+		//Пусть?
+		return top == EMPTY;
+	}
+	bool IsFull()
+	{
+		//Полон?
+		return top == FULL;
+	}
+	
+	void Push(int number)
+	{
+		//Если в стеке есть место, то увеличиваем
+		//указатель на вершину стека и вставляем
+		//новый элемент
+		if (!IsFull())
+		{
+			array[++top] = number;
+		}
+	}
+
+	void Pop()
+	{
+		//Если в стеке есть элементы, то возвращаем
+		//верхний и уменьшаем указатель на вершину стека
+		if (!IsEmpty())
+		{
+			array[top] = 0;
+			top--;
+		}
+	}
+
+	void print()
+	{
+		for (int i = 0; i <= top; i++)
+		{
+			cout << array[i] << "\t";
+ 		}
+		cout << endl;
+	}
+
+	int getCount()
+	{
+		//Количество присутствующих элементов в стеке
+		return top + 1;
+	}
+
+	void Clear()
+	{
+		//Эффиктивная "очистка" стека
+		//(Данные в массиве сущ., но фукнция
+		//класса, ориентированные на работу 
+		//с вершиной стека, будет их игнорировать!!!
+		
+		top = EMPTY;
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	
+	Stack stack;
+	stack.Push(1);
+	stack.Push(2);
+	stack.Push(3);
+	stack.Push(4);
+	stack.Push(5);
+
+	stack.print();
+
+	stack.Pop();
+	stack.print();
+
+	stack.Clear();
+	cout <<"Размер Стека: "<< stack.getCount() << endl;
+
+	return 0;
+}
